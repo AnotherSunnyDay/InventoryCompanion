@@ -1,5 +1,6 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
 const Items = require('../../database/schemas/Items');
+const NamingHelper = require('../../helpers/ItemName');
 
 module.exports = class RemoveItemCommand extends BaseCommand {
   constructor() {
@@ -8,19 +9,9 @@ module.exports = class RemoveItemCommand extends BaseCommand {
 
   async run(client, message, args) {
     try {
-      let endofitem=-1, name='',quantity=1,owner='group', id;
-      args.forEach((arg, index) => {
-        if(endofitem <= -1){
-          if(arg.startsWith("-")) endofitem = index-1;
-        }
-      });
-
-      if(endofitem <= -1) endofitem = args.length -1;
-
-      for(let i = 0; i<=endofitem; i++){
-        name += args[i] + " ";
-      }
-      name = name.slice(0, -1);
+      let quantity=1,owner='group', id;
+      
+      let name = NamingHelper(args);
       if(name === '') return message.channel.send("No Item given :(");
 
       const qIndex = args.indexOf('-q');
