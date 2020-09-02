@@ -9,6 +9,7 @@ module.exports = class ViewInventoryCommand extends BaseCommand {
 
   async run(client, message, args, owner = null) {
     try {
+      let id;
       if(!owner) owner = args[0];
       if(owner && owner === 'self'){
         id = message.member.id
