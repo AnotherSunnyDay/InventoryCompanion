@@ -1,6 +1,6 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
 const Items = require('../../database/schemas/Items');
-const NamingHelper = require('../../helpers/ItemName');
+const {NamingHelper, IndexHelper} = require('../../helpers/HelperFunctions');
 
 module.exports = class RemoveItemCommand extends BaseCommand {
   constructor() {
@@ -9,16 +9,16 @@ module.exports = class RemoveItemCommand extends BaseCommand {
 
   async run(client, message, args) {
     try {
-      let quantity=1,owner='group', ownerId, guildId;
+      let owner='group', ownerId, guildId;
 
-      const qIndex = args.indexOf('-q');
-      if(qIndex > 0) quantity = args[qIndex +1];
-      const aIndex = args.indexOf('-all');
+      let quantity = IndexHelper(args, "-q", true) || 1;
 
-      const oIndex = args.indexOf('-self');
-      if(oIndex > 0) owner = 'self';
+      const all = IndexHelper(args, "-all");
 
-      if(owner != 'group' && owner != 'self') return message.channel.send("invalid group type");
+      if(IndexHelper(args, "-self")) owner = 'self';
+
+
+      if(owner != 'group' && owner != 'self') return message.channel.send("Invalid group type");
       if(owner=== 'self') ownerId = message.member.id;
       guildId = message.guild.id;
 
@@ -34,7 +34,7 @@ module.exports = class RemoveItemCommand extends BaseCommand {
         if(!item) return message.channel.send("That item does not exist")
 
         let newQuanity;
-        if(aIndex < 0) newQuanity = item.quantity - parseInt(quantity);
+        if(!all) newQuanity = item.quantity - parseInt(quantity);
         else newQuanity = 0;
         if(newQuanity <= 0){
           item = await Items.findOneAndDelete({ ownerType: owner, guildId: guildId, ownerId: ownerId, name: name });
@@ -54,6 +54,7 @@ module.exports = class RemoveItemCommand extends BaseCommand {
 
     } catch (err) {
       console.error(err)
+      message.channel.send("It seems an error has occured :(")
     }
   }
 }

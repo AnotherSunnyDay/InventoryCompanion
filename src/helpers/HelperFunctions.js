@@ -17,4 +17,16 @@ const NamingHelper = (args) => {
 }
 
 
-module.exports = NamingHelper;
+const IndexHelper = (args, needle, value=false) => {
+    const index = args.indexOf(needle);
+    if(index > 0){
+        if(value){
+            return args[index+1]
+        }
+        else return true
+    }
+    else return false;
+}
+
+
+module.exports = {NamingHelper, IndexHelper};

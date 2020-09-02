@@ -1,6 +1,6 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
 const Items = require('../../database/schemas/Items');
-const NamingHelper = require('../../helpers/ItemName');
+const {NamingHelper, IndexHelper} = require('../../helpers/HelperFunctions');
 
 module.exports = class AddItemCommand extends BaseCommand {
   constructor() {
@@ -10,16 +10,14 @@ module.exports = class AddItemCommand extends BaseCommand {
   async run(client, message, args) {
     //message.channel.send(`Name: ${args[0]}   Value: ${value[0]}${value[1]}     Weight: ${weight[0]}${weight[1]}`); 
     try {
-      let quantity=1,owner='group', guildId, ownerId;
+      let owner='group', guildId, ownerId;
       
       let name = NamingHelper(args);
       if(name === '') return message.channel.send("No Item given :(");
 
-      const qIndex = args.indexOf('-q');
-      if(qIndex > 0) quantity = args[qIndex +1];
+      let quantity = IndexHelper(args, "-q", true) || 1;
 
-      const oIndex = args.indexOf('-self');
-      if(oIndex > 0) owner = 'self';
+      if(IndexHelper(args, "-self")) owner = 'self';
 
       if(owner != 'group' && owner != 'self') return message.channel.send("invalid group type");
       if(owner=== 'self') ownerId = message.member.id;
@@ -45,7 +43,7 @@ module.exports = class AddItemCommand extends BaseCommand {
       const command = client.commands.get('view');
       command.run(client, message, args, owner);
     } catch (err) {
-      message.channel.send("An error has occured, items not added.");
+      message.channel.send("It seems an error has occured :(")
       console.log(err)
     }
   }
