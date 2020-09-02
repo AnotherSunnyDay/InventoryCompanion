@@ -9,7 +9,6 @@ module.exports = class ViewInventoryCommand extends BaseCommand {
 
   async run(client, message, args, owner = null) {
     try {
-      let id;
       if(!owner) owner = args[0];
       if(owner && owner === 'self'){
         id = message.member.id
@@ -21,7 +20,8 @@ module.exports = class ViewInventoryCommand extends BaseCommand {
       const items  = await Items.find({ownerType: owner, ownerId: id })
       if(items){
         const messageOut = new Discord.MessageEmbed()
-        .setTitle('Your Inventory');
+        if(owner === 'group') messageOut.setTitle('Group Inventory');
+        else messageOut.setTitle('Your Inventory');
         items.forEach(item => {
           messageOut.addFields({name:`${item.name}`, value:`${item.quantity}`})
         });

@@ -1,0 +1,5 @@
+inorder to run:
+must have node downloaded on machine
+install dependencies in proejct folder with "npm install"
+to run dev: "npm run dev"
+to run production: "npm run start"
