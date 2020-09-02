@@ -5,9 +5,13 @@ const ItemsSchema = new mongoose.Schema({
         type:String,
         required: true
     },
+    guildId:{
+        type:String,
+        required: true
+    },
     ownerId:{
         type:mongoose.Schema.Types.Number,
-        required:true,
+        required:false,
     },
     name:{
         type: String,

@@ -9,20 +9,21 @@ module.exports = class ViewInventoryCommand extends BaseCommand {
 
   async run(client, message, args, owner = null) {
     try {
-      let id;
+      let ownerId, guildId;
       if(!owner) owner = args[0];
-      if(owner && owner === 'self'){
-        id = message.member.id
+      guildId = message.guild.id
+      if(owner && (owner === '-self' || owner === 'self')){
+        owner = 'self'
+        ownerId = message.member.id
       } else {
         owner = 'group'
-        id = message.guild.id
       }
       if(owner != 'group' && owner != 'self') return message.channel.send("Invalid owner type");
-      const items  = await Items.find({ownerType: owner, ownerId: id })
+      const items  = await Items.find({ownerType: owner, guildId: guildId, ownerId: ownerId })
       if(items){
         const messageOut = new Discord.MessageEmbed()
         if(owner === 'group') messageOut.setTitle('Group Inventory');
-        else messageOut.setTitle('Your Inventory');
+        else messageOut.setTitle(`${message.author.username}'s Inventory`);
         items.forEach(item => {
           messageOut.addFields({name:`${item.name}`, value:`${item.quantity}`})
         });
