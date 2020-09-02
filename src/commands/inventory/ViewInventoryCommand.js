@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 module.exports = class ViewInventoryCommand extends BaseCommand {
   constructor() {
-    super('view', 'inventory', []);
+    super('view', 'inventory', ['v']);
   }
 
   async run(client, message, args, owner = null) {

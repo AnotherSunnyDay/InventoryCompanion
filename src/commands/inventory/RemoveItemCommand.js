@@ -4,7 +4,7 @@ const {NamingHelper, IndexHelper} = require('../../helpers/HelperFunctions');
 
 module.exports = class RemoveItemCommand extends BaseCommand {
   constructor() {
-    super('remove', 'inventory', ['delete']);
+    super('remove', 'inventory', ['delete', 'r', 'd']);
   }
 
   async run(client, message, args) {

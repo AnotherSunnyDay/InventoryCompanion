@@ -4,7 +4,7 @@ const {NamingHelper, IndexHelper} = require('../../helpers/HelperFunctions');
 
 module.exports = class AddItemCommand extends BaseCommand {
   constructor() {
-    super('add', 'inventory', []);
+    super('add', 'inventory', ['a']);
   }
 
   async run(client, message, args) {
