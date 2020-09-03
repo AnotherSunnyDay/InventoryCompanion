@@ -34,7 +34,8 @@ module.exports = class DiceRollerCommand extends BaseCommand {
 
       let stringout='', total=0;
       for(let i = 0; i<numbofdice; i++){
-        let thisrole = Math.floor(Math.random() * die);  
+        let thisrole = Math.floor(Math.random() * (die));  
+        thisrole++;
         total += thisrole
         stringout += `(${thisrole}) + `
       }
