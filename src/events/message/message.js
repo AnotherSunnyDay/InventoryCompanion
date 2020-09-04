@@ -15,9 +15,10 @@ module.exports = class MessageEvent extends BaseEvent {
       .trim()
       .split(/\s+/);
       const regex = /([0-9]?)+d([0-9])+/g ;
+      //if the cmdName meets pattern for dice roller
       if(regex.test(cmdName)){
-        const command = client.commands.get('role');
-        command.run(client, message, cmdName);
+        const command = client.commands.get('roll');
+        command.run(client, message, cmdName, cmdArgs);
       }
       else {
         const command = client.commands.get(cmdName);
