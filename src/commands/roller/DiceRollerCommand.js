@@ -27,8 +27,8 @@ module.exports = class DiceRollerCommand extends BaseCommand {
       modifier = parseInt(modifier)
 
       let stringout='', total=0;
-      advantage = IndexHelper(extras, "-A");
-      disadvantage = IndexHelper(extras, "-D");
+      const advantage = IndexHelper(extras, "-A");
+      const disadvantage = IndexHelper(extras, "-D");
       if (advantage || disadvantage) {
         let roles =[];
         for(let i = 0; i<numbofdice; i++){
