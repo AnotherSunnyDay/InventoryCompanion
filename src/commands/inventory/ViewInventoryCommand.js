@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 module.exports = class ViewInventoryCommand extends BaseCommand {
   constructor() {
-    super('view', 'inventory', []);
+    super('view', 'inventory', ['v']);
   }
 
   async run(client, message, args, owner = null) {
@@ -32,6 +32,7 @@ module.exports = class ViewInventoryCommand extends BaseCommand {
 
     } catch (err) {
       console.error(err)
+      message.channel.send("It seems an error has occured :(")
     }
   }
 }
