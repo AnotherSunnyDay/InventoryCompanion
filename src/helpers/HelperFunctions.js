@@ -17,10 +17,10 @@ const NamingHelper = (args) => {
 }
 
 
-const IndexHelper = (args, needle, value=false) => {
+const IndexHelper = (args, needle, returnIndex=false) => {
     const index = args.indexOf(needle);
-    if(index > 0){
-        if(value){
+    if(index >= 0){
+        if(returnIndex){
             return args[index+1]
         }
         else return true

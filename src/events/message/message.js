@@ -14,9 +14,17 @@ module.exports = class MessageEvent extends BaseEvent {
       .slice(prefix.length)
       .trim()
       .split(/\s+/);
-      const command = client.commands.get(cmdName);
-      if (command) {
-        command.run(client, message, cmdArgs);
+      const regex = /([0-9]?)+d([0-9])+/g ;
+      //if the cmdName meets pattern for dice roller
+      if(regex.test(cmdName)){
+        const command = client.commands.get('roll');
+        command.run(client, message, cmdName, cmdArgs);
+      }
+      else {
+        const command = client.commands.get(cmdName);
+        if (command) {
+          command.run(client, message, cmdArgs);
+        }
       }
     }
   }
