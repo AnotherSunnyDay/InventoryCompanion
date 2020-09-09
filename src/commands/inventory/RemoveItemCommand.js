@@ -9,9 +9,15 @@ module.exports = class RemoveItemCommand extends BaseCommand {
 
   async run(client, message, args) {
     try {
-      let owner='group', ownerId, guildId;
+      let owner = 'group', ownerId, guildId, quantity = 1;
 
-      let quantity = IndexHelper(args, "-q", true) || 1;
+      const qntytest = /(-)([0-9])+/g;
+      let breaker = true;
+      args.forEach(arg => {
+        if(qntytest.test(arg) && breaker){
+          quantity = arg.slice(1);
+        }
+      });
 
       const all = IndexHelper(args, "-all");
 

@@ -16,12 +16,12 @@ module.exports = class AddItemCommand extends BaseCommand {
       if(name === '') return message.channel.send("No Item given :(");
 
       const qntytest = /(-)([0-9])+/g;
+      let breaker = true;
       args.forEach(arg => {
-        if(qntytest.test(arg)){
+        if(qntytest.test(arg) && breaker){
           quantity = arg.slice(1);
         }
-      })
-      // let quantity = IndexHelper(args, "-q", true) || 1;
+      });
 
 
       if(IndexHelper(args, "-self")) owner = 'self';
