@@ -12,7 +12,7 @@ const NamingHelper = (args) => {
         for(let i = 0; i<=endofitem; i++){
             name += args[i] + " ";
         }
-        name = name.slice(0, -1);
+        name = name.trim();
         return name;
 }
 

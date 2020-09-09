@@ -10,12 +10,19 @@ module.exports = class AddItemCommand extends BaseCommand {
   async run(client, message, args) {
     //message.channel.send(`Name: ${args[0]}   Value: ${value[0]}${value[1]}     Weight: ${weight[0]}${weight[1]}`); 
     try {
-      let owner='group', guildId, ownerId;
+      let owner='group', guildId, ownerId, quantity =1;
       
       let name = NamingHelper(args);
       if(name === '') return message.channel.send("No Item given :(");
 
-      let quantity = IndexHelper(args, "-q", true) || 1;
+      const qntytest = /(-)([0-9])+/g;
+      args.forEach(arg => {
+        if(qntytest.test(arg)){
+          quantity = arg.slice(1);
+        }
+      })
+      // let quantity = IndexHelper(args, "-q", true) || 1;
+
 
       if(IndexHelper(args, "-self")) owner = 'self';
 
