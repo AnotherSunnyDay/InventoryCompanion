@@ -8,7 +8,7 @@ module.exports = class MessageEvent extends BaseEvent {
   async run(client, message) {
     if (message.author.bot) return;
     const guildConfig = await GuildConfig.findOne({guildId: message.guild.id });
-    const prefix = guildConfig.get( 'prefix' );
+    const prefix = "!";
     if (message.content.startsWith(prefix)) {
       const [cmdName, ...cmdArgs] = message.content
       .slice(prefix.length)
